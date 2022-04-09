@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<rss version="2.0">
+    <channel>
+        <title>{{ shop }}</title>
+        <link>{{ server_url }}</link>
+        <description>Anime Figures - {{ shop }}</description>
+        <language>de</language>
+        <copyright>{{ server_url }}</copyright>
+        <lastBuildDate>{{ build_date }}</lastBuildDate>
+        <generator>{{ server_url }}</generator>
+        <image>
+            <url>{{ favicon_path }}</url>
+            <title>{{ shop }}</title>
+            <link>{{ server_url }}</link>
+        </image>
+        {% for item in items %}
+            <item>
+                <title>{{ item['title'] }}</title>
+                <link>
+                    {{ item['url'] }}
+                </link>
+                <pubDate>{{ item['save_date'] }}</pubDate>
+                <description>
+                    <img src="{{ item['image_path'] }}" />
+                </description>
+                <guid>
+                    {{ item['url'] }}
+                </guid>
+            </item>
+        {% endfor %}
+    </channel>
+</rss>
