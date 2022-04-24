@@ -16,10 +16,11 @@ class Rss:
         if not self._output_folder.exists():
             self._output_folder.mkdir()
 
-    def generate_rss_file(self, shop, items):
+    def generate_rss_file(self, shop, link, items):
         build_date = datetime.strftime(datetime.now(tz=ZoneInfo("Europe/Berlin")), "%a, %d %b %Y %H:%M:%S %z")
         template = self._env.get_template("rss.xml")
         rss_data = template.render(shop=shop,
+                                   link=link,
                                    server_url="SERVER",
                                    build_date=build_date,
                                    favicon_path=self._favicon_path,
@@ -27,5 +28,5 @@ class Rss:
         self._write_rss_file(shop, rss_data)
 
     def _write_rss_file(self, shop, rss_data):
-        with (open(self._output_folder / f"{shop}.xml"), 'w') as f:
+        with open(self._output_folder / f"{shop}.xml", 'w') as f:
             f.write(rss_data)

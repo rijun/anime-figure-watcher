@@ -2,7 +2,7 @@
 <rss version="2.0">
     <channel>
         <title>{{ shop }}</title>
-        <link>{{ server_url }}</link>
+        <link>{{ link }}</link>
         <description>Anime Figures - {{ shop }}</description>
         <language>de</language>
         <copyright>{{ server_url }}</copyright>
@@ -11,17 +11,19 @@
         <image>
             <url>{{ favicon_path }}</url>
             <title>{{ shop }}</title>
-            <link>{{ server_url }}</link>
+            <link>{{ link }}</link>
         </image>
         {% for item in items %}
             <item>
-                <title>{{ item['title'] }}</title>
+                <title>{{ item['title'] }} {{ item['price'] | string }} €</title>
                 <link>
                     {{ item['url'] }}
                 </link>
                 <pubDate>{{ item['save_date'] }}</pubDate>
                 <description>
                     <img src="{{ item['image_path'] }}" />
+                    <h2>{{ item['title'] }}</h2>
+                    <br>{{ item['description'] }}</br>
                 </description>
                 <guid>
                     {{ item['url'] }}
