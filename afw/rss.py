@@ -4,15 +4,17 @@ from zoneinfo import ZoneInfo
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
+from afw import config
+
 
 class Rss:
-    def __init__(self, output_folder):
+    def __init__(self):
         self._env = Environment(
-            loader=PackageLoader("app"),
+            loader=PackageLoader("afw"),
             autoescape=select_autoescape()
         )
         self._favicon_path = "Test"
-        self._output_folder = pathlib.Path(output_folder)
+        self._output_folder = pathlib.Path(config.output_dir)
         if not self._output_folder.exists():
             self._output_folder.mkdir()
 
@@ -21,7 +23,7 @@ class Rss:
         template = self._env.get_template("rss.xml")
         rss_data = template.render(shop=shop,
                                    link=link,
-                                   server_url="SERVER",
+                                   server_url=config.server_url,
                                    build_date=build_date,
                                    favicon_path=self._favicon_path,
                                    items=items)
