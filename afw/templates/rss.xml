@@ -15,15 +15,15 @@
         </image>
         {% for item in items %}
             <item>
-                <title>{{ item['title'] }} {{ item['price'] | string }} €</title>
+                <title>{{ item['title'] }} {{ item['price'] | string }}</title>
                 <link>
                     {{ item['url'] }}
                 </link>
                 <pubDate>{{ item['save_date'] }}</pubDate>
                 <description>
-                    <img src="{{ item['image_path'] }}" />
-                    <h2>{{ item['title'] }}</h2>
-                    <br>{{ item['description'] }}</br>
+                    &lt;img src=&#039;{{ item['image_path'] }}&#039; /&gt;
+                    &lt;h2&gt;{{ item['title'] }}&lt;/h2&gt;
+                    &lt;br&gt;{{ item['description'] }}&lt;/br&gt;
                 </description>
                 <guid>
                     {{ item['url'] }}

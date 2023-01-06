@@ -30,5 +30,5 @@ class Rss:
         self._write_rss_file(shop, rss_data)
 
     def _write_rss_file(self, shop, rss_data):
-        with open(self._output_folder / f"{shop}.xml", 'w') as f:
+        with open(self._output_folder / f"{shop}.xml", 'w', encoding="utf-8") as f:
             f.write(rss_data)

@@ -14,7 +14,7 @@ def main():
     abw = AllblueWorld()
     abw_products = abw.get_figures('sao')
 
-    rss.generate_rss_file('AllblueWorld', 'https://www.allblue-world.de', abw_products)
+    rss.generate_rss_file('allblue-world', 'https://www.allblue-world.de', abw_products)
 
 
 if __name__ == '__main__':

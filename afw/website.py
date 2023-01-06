@@ -4,11 +4,13 @@ import requests
 
 
 class Website:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self):
+        pass
 
-    def request_page(self, params):
-        r = requests.get(self.url, params)
+    @staticmethod
+    def _request_page(url, params=None):
+        params = {} if params is None else params
+        r = requests.get(url, params)
         if r.status_code != 200:
             raise RuntimeError("Request failed")
         logging.info(f"Queried {r.request.url}")

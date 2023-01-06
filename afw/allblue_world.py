@@ -1,3 +1,6 @@
+import re
+from datetime import date
+
 from bs4 import BeautifulSoup
 
 from website import Website
@@ -5,7 +8,7 @@ from website import Website
 
 class AllblueWorld(Website):
     def __init__(self):
-        super(AllblueWorld, self).__init__("https://www.allblue-world.de/shop/")
+        super(AllblueWorld, self).__init__()
 
     def get_figures(self, theme):
         params_dict = {
@@ -24,7 +27,7 @@ class AllblueWorld(Website):
         params_dict['f'] = '|'.join([str(x) for x in f_param])
 
         try:
-            response = self.request_page(params_dict)
+            response = self._request_page("https://www.allblue-world.de/shop/", params_dict)
         except RuntimeError:
             return
 
@@ -32,12 +35,31 @@ class AllblueWorld(Website):
 
         div = soup.find('div', class_='listing--container')
 
+        # 'title', 'price', 'url', 'save_date', 'image_path', 'description'
         products = []
         for a in div.find_all('a', class_='product--title'):
-            products.append({
+            price = re.search(r'\d+,\d+', a.find_next('span', class_='price--default').text)
+            d = {
                 'title': a['title'],
-                'link': a['href'],
-                'image': a.next_sibling.find_next('img')['srcset']
-            })
+                'url': a['href'],
+                'save_date': date.today().isoformat(),
+                'image_path': a.next_sibling.find_next('img')['srcset'].split(',')[0],
+                'price': f"{price.group()} €",
+                'description': self._get_description(a['href'])
+            }
+            products.append(d)
 
         return products
+
+    def _get_description(self, product_url):
+        try:
+            response = self._request_page(product_url)
+        except RuntimeError:
+            return ""
+
+        soup = BeautifulSoup(response, 'html.parser')
+        div = soup.find('div', class_='product--description')
+        description_content = []
+        for p in div.find_all('p'):
+            description_content.append(str(p))
+        return "".join(description_content)
