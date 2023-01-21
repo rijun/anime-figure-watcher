@@ -1,3 +1,4 @@
+import logging
 import pathlib
 import sqlite3
 
@@ -15,5 +16,6 @@ class Database:
         self._con.close()
 
     def _setup_database(self):
+        logging.info("Create new database")
         with self._con:
             self._con.execute("CREATE TABLE items (shop text, title text, url text, save_date text, image_path text, description text, price real)")

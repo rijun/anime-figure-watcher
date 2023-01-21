@@ -26,3 +26,5 @@ htmlcov/
 *,cover
 
 rss/
+
+config.ini
